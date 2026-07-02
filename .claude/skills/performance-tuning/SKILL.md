@@ -58,8 +58,11 @@ costs maintainability.
    runtime caps your total win at 2% — even if you make it infinitely fast.
    Compute the ceiling for each candidate: eliminating a 62% component at best
    yields a 2.6× speedup; halving it yields ~1.45×. Only attack components whose
-   ceiling can reach your target; if no single component can, you need a
-   structural change (step 5's algorithmic branch, or architecture), not tuning.
+   ceiling can reach your target. If no single component can, compute the
+   combined ceiling of the top two or three components — cumulative wins across
+   several hotspots routinely reach a target no single one can. Only if that
+   combined ceiling still misses the target do you need a structural change
+   (step 5's algorithmic branch, or architecture), not tuning.
 
    Exit criterion: chosen target's best-case win, computed, is ≥ the gap to the
    target.
@@ -71,6 +74,9 @@ costs maintainability.
    data size while micro-optimizations yield fixed small percentages — and a
    micro-optimized O(n²) is still doomed at 10× scale. Only after complexity is
    right, spend on constant factors (allocation reduction, batching, vectorization).
+
+   Exit criterion: the hotspot's complexity class is known and either already
+   optimal for the data size or fixed and re-measured.
 
 6. **Change one thing, re-measure, keep or revert.** For each optimization: apply
    it alone, run the harness, compare against baseline with variance in mind.
@@ -88,6 +94,9 @@ costs maintainability.
    readability, flexibility, and review time for a number nobody asked for.
    Record the final numbers, the harness command, and the changes kept; hand the
    diff to `verifying-changes` and `reviewing-code`.
+
+   Exit criterion: target met at realistic load, final numbers and harness
+   command recorded, diff handed off.
 
 ## Decision points
 

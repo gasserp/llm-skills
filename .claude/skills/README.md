@@ -54,7 +54,9 @@ Body structure, in this order:
 1. **Purpose** — one short paragraph: the situation, and the standard this skill
    holds you to.
 2. **Core workflow** — numbered steps. Each step says what to do, how to do it
-   (commands, artifacts), and its exit criterion — how you know the step is done.
+   (commands, artifacts), and its exit criterion — how you know the step is
+   done. Write it as a plain `Exit criterion:` line (no italics) so the format
+   is uniform across skills.
 3. **Decision points** — explicit branching criteria ("if X, do A; if Y, do B").
    A junior reader must never have to guess which branch applies.
 4. **Quality bar** — a checklist that defines "done at senior standard". These are

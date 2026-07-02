@@ -23,7 +23,7 @@ trust and cost others a debugging session.
    (`grep -rn "import <module>\|from <module>"`), and other users of any config
    key, schema, or shared helper you modified. Verification driven by "what did
    I intend" misses exactly the breakage you didn't intend.
-   *Exit criterion:* a checklist of flows: affected, error, neighbor.
+   Exit criterion: a checklist of flows: affected, error, neighbor.
 
 2. **Build and run from a clean, production-like state.** Rebuild the artifact
    that actually runs (`npm run build`, `make`, container image), clear caches
@@ -32,7 +32,7 @@ trust and cost others a debugging session.
    data that resembles reality rather than a hand-seeded row that happens to
    dodge the bug. Verifying a stale build verifies the *previous* version of
    your change.
-   *Exit criterion:* you can state which artifact ran and why it must contain
+   Exit criterion: you can state which artifact ran and why it must contain
    your change (fresh build timestamp, image digest, restarted process).
 
 3. **Exercise the ACTUAL affected flow at the layer the user experiences.**
@@ -48,7 +48,7 @@ trust and cost others a debugging session.
      system picked it up (log line, effective-config endpoint).
    Calling the inner function skips parsing, routing, serialization, auth, and
    wiring — which is where integration bugs live.
-   *Exit criterion:* real invocation executed; actual output captured.
+   Exit criterion: real invocation executed; actual output captured.
 
 4. **Verify error paths, not just the happy path.** Most production breakage
    lives in paths nobody ran. From your step-1 list, trigger at least: one
@@ -57,14 +57,14 @@ trust and cost others a debugging session.
    the change touches auth. Confirm the failure is the *designed* failure —
    correct status/message, no stack trace to the user, no half-written state
    left behind.
-   *Exit criterion:* each relevant error path observed producing its intended
+   Exit criterion: each relevant error path observed producing its intended
    failure, output captured.
 
 5. **Regression-check the neighbors.** Run the flows from step 1(c): the other
    callers of what you changed, at whatever layer is cheapest but real. Also
    run the existing test suite for the touched modules — it is necessary
    (cheap, broad) but not sufficient (only pins what someone thought to pin).
-   *Exit criterion:* every neighbor flow on the list ran; suite green.
+   Exit criterion: every neighbor flow on the list ran; suite green.
 
 6. **Report with evidence, and never imply more than you did.** The report
    contains the actual commands and their actual output (trimmed to the
@@ -82,7 +82,7 @@ trust and cost others a debugging session.
    behavior against the real S3 bucket — no credentials in this environment."
    Stating the gap lets the reader cover it; hiding it converts your gap into
    their outage.
-   *Exit criterion:* every claim in the report is backed by pasted output or
+   Exit criterion: every claim in the report is backed by pasted output or
    explicitly labeled unverified.
 
 ## Decision points

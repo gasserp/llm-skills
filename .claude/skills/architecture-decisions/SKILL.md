@@ -178,7 +178,8 @@ advance and whose reopening conditions are stated.
 
 ## Escalation
 
-- Reversal cost of the leading option exceeds roughly a quarter of team-effort,
+- Reversal cost of the leading option exceeds roughly three team-months of
+  effort,
   or the decision binds other teams' roadmaps: require sign-off from the
   senior-most affected engineer/architect before committing.
 - The scorecard's winner contradicts a strong default and the overriding

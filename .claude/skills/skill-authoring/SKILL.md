@@ -41,7 +41,7 @@ conference talk.
    moment in a real task.
 
 3. **Draft inside the binding conventions.** Read
-   `/home/user/llm-skills/.claude/skills/README.md` and follow it exactly —
+   `.claude/skills/README.md` and follow it exactly —
    conventions are what make skills composable and loadable, and every
    deviation taxes every future reader:
    - File at `.claude/skills/<name>/SKILL.md`; `name` kebab-case, matching the

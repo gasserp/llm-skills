@@ -21,7 +21,7 @@ one small step. Refactoring that might have changed behavior is not refactoring
    both halves unreviewable — the reviewer can't verify equivalence of the
    refactor *or* see the behavior change clearly, so they must re-derive both
    from scratch.
-   *Exit criterion:* a written plan listing each commit and labeling it
+   Exit criterion: a written plan listing each commit and labeling it
    `refactor` or `behavior`.
 
 2. **Measure the safety net.** Run the existing tests for the code you'll touch
@@ -30,7 +30,7 @@ one small step. Refactoring that might have changed behavior is not refactoring
    coverage tooling is unavailable, deliberately break the code
    (invert a condition) and confirm a test fails. A suite that stays green when
    the code is wrong protects nothing.
-   *Exit criterion:* you know which behaviors of the target code are pinned by
+   Exit criterion: you know which behaviors of the target code are pinned by
    tests and which are not.
 
 3. **Write characterization tests where coverage is thin.** For each unpinned
@@ -41,7 +41,7 @@ one small step. Refactoring that might have changed behavior is not refactoring
    a separate, later commit, because a refactor that also fixes bugs can no
    longer be verified by equivalence. Commit the characterization tests first,
    as their own `test:` commit.
-   *Exit criterion:* every code path you will move fails a test if its output
+   Exit criterion: every code path you will move fails a test if its output
    changes.
 
 4. **Refactor in small mechanical steps.** Use named, reversible moves — rename,
@@ -52,16 +52,19 @@ one small step. Refactoring that might have changed behavior is not refactoring
    edits, because mechanical tools don't get tired mid-file. Big-bang rewrites
    lose the thread of equivalence: once everything is different at once, neither
    you nor the reviewer can say why it should behave the same.
-   *Exit criterion per step:* code compiles, full relevant test suite passes.
+   Exit criterion per step: code compiles, full relevant test suite passes.
 
-5. **Commit at every green state.** After each passing step:
-   `git add -A && git commit -m "refactor: <mechanical move>"`. Small green
-   commits mean `git bisect` pins any later breakage to one move, and `git
-   revert` of one step never entangles others. If a step goes red and the fix
-   isn't obvious within a few minutes, `git checkout .` back to green and take a
+5. **Commit at every green state.** After each passing step: stage the files
+   the move touched by name (`git add <paths>` — `git add -A` sweeps stray
+   scratch files into refactor commits), then
+   `git commit -m "refactor: <mechanical move>"`. Small green commits mean
+   `git bisect` pins any later breakage to one move, and `git revert` of one
+   step never entangles others. If a step goes red and the fix isn't obvious
+   within ~15 minutes, revert to the last green commit (`git restore .`, plus
+   `git clean -fd` for untracked files the failed step created) and take a
    smaller step — debugging a broken intermediate state is how refactors turn
    into rewrites.
-   *Exit criterion:* `git log` reads as a sequence of single mechanical moves,
+   Exit criterion: `git log` reads as a sequence of single mechanical moves,
    each green.
 
 6. **Keep a rollback path.** Work on a branch; never force-push over the
@@ -70,7 +73,7 @@ one small step. Refactoring that might have changed behavior is not refactoring
    in one revert. Before declaring done, run the code for real, not just its
    tests — see `verifying-changes` — because tests only pin what someone thought
    to pin.
-   *Exit criterion:* you can state the one-command rollback (`git revert <range>`
+   Exit criterion: you can state the one-command rollback (`git revert <range>`
    or branch deletion) and you have run the real flow once.
 
 ## Decision points

@@ -90,17 +90,19 @@ familiarity with names, not understanding of flow.
    a miss.
 
 6. **Find the three most similar examples.** Before writing anything new, locate
-   the three existing things most like what you'll build (three similar
-   endpoints, three similar migrations, three similar tests). Grep for the
-   nearest domain noun or copy the registration pattern found in step 3. Three,
-   not one: one example may be an outlier or legacy; three reveal the real
-   pattern by majority. Hand this off to `extending-code` when you start the
-   change.
+   the three existing things most like what you'll build; grep for the nearest
+   domain noun or the registration pattern found in step 3. See `extending-code`
+   step 1 for the full procedure and the why.
+
+   Exit criterion: three named examples, with file paths, for the change you
+   are about to make.
 
 ## Decision points
 
-- **Repo under ~5k lines:** skip step 1's directory survey; read the entry point
-  and go straight to the trace. Recon overhead exceeds its value.
+- **Repo under ~5k lines:** skip step 1's directory-shape and config bullets;
+  still run the test suite and note the build/test commands, then read the
+  entry point and go straight to the trace. Recon overhead exceeds its value,
+  but the test baseline is required regardless of size.
 - **Monorepo or >100k lines:** scope everything to the one package/service you'll
   touch. Onboard to the subsystem, not the world; treat other packages as
   external dependencies.

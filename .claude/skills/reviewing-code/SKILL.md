@@ -96,6 +96,9 @@ that works, and reviewer attention is finite.
    2–5 produced blocking findings, cap style comments at the few that matter,
    so the author's attention lands on the bugs.
 
+   Exit criterion: every remaining comment is design or style, labeled
+   non-blocking unless it names a concrete future failure.
+
 7. **Write the feedback.** For every comment:
    - Mark it **blocking**, **non-blocking**, or **question** — the author must
      never have to guess what stands between them and merge.

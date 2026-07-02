@@ -106,6 +106,10 @@ parallelism and context isolation; spend it only where it pays.
    and converge slower, because regeneration without feedback re-rolls the same
    dice.
 
+   Exit criterion: the flawed output was fixed via a targeted review round to
+   the same agent — or the respawn is justified in one sentence (context
+   poisoned, or the decomposition itself was wrong).
+
 ## Decision points
 
 - **Task fits one session:** stay in one session. This is the default; the

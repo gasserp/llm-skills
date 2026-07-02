@@ -56,6 +56,9 @@ symptom. Anything less is symptom-hiding with extra steps.
    - *Regression (used to work)?* `git bisect run <repro-command>` — it's
      automated binary search over history and finds the guilty commit in
      log₂(N) runs. This is usually the single highest-value move available.
+     Wrap the repro so it exits 0 on success and 1 on failure (bisect trusts
+     exit codes, not output — a repro that merely prints the wrong answer
+     bisects to garbage; exit 125 skips an untestable commit).
    - *Data-dependent?* Halve the input until the failing record is isolated.
    - *System too big?* Disable or stub subsystems (cache off, queue drained,
      middleware removed) to halve the suspect surface.
@@ -73,6 +76,9 @@ symptom. Anything less is symptom-hiding with extra steps.
    (`git stash`, config flag back). Why: two simultaneous changes that "fix" the
    bug leave you not knowing which mattered — you've traded one unknown for two.
 
+   Exit criterion: every ledger entry names exactly one altered variable, and
+   the baseline was restored between entries.
+
 6. **Choose instrumentation vs code-reading deliberately.**
    - *Read the code* when the logic is static and the state is simple: pure
      functions, config resolution, branching logic. Reading is faster and
@@ -84,6 +90,9 @@ symptom. Anything less is symptom-hiding with extra steps.
      *could* happen; only observation tells you what *did*.
    - When instrumenting, log the suspect value at the boundary between "known
      good" and "known bad" layers — that placement is itself a binary search.
+
+   Exit criterion: for the current hypothesis you can say which mode you chose
+   and why, and the observation (or reading) produced a recorded ledger result.
 
 7. **Fix at the root, then verify the whole chain.** Once the ledger converges on
    a cause, write down the causal chain: defect → intermediate corruption →
@@ -136,7 +145,9 @@ symptom. Anything less is symptom-hiding with extra steps.
 - [ ] Fix applied at the defect, not at the crash site, unless they coincide.
 - [ ] Original reproduction re-run and passing; full suite passing; regression
       test added that fails without the fix.
-- [ ] All debugging instrumentation removed from the final diff.
+- [ ] All debugging instrumentation removed from the final diff — except
+      instrumentation deliberately shipped under the cannot-reproduce branch
+      (see Decision points), which is called out in the report.
 
 ## Common traps
 
@@ -168,8 +179,10 @@ symptom. Anything less is symptom-hiding with extra steps.
   and present the ledger to a human — the ledger itself makes the handoff cheap,
   and a fresh reader often spots the untested assumption.
 - Root cause lands in code you cannot change (third-party service, closed
-  dependency, platform): document the causal chain, implement the least-magical
-  workaround, and escalate the upstream fix with your minimal repro attached.
+  dependency, platform): document the causal chain, implement the workaround
+  with the smallest surface area that does not patch or monkey-patch the
+  dependency's internals, document it with a link to the upstream issue at the
+  call site, and escalate the upstream fix with your minimal repro attached.
 - Evidence contradicts itself (the same experiment gives different results with
   all known variables pinned): suspect the environment (dirty build cache, two
   processes, wrong binary) — verify you're running what you think you're running,

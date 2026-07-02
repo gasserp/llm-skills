@@ -21,7 +21,7 @@ reader knows the house pattern, not yours.
    Use `grep`/`Glob` for the nouns of the domain and for framework registration
    keywords (`router.`, `@app.route`, `addCommand`, `register`, `subscribe`).
    Three, not one: one example may itself be an outlier; three reveal the pattern.
-   *Exit criterion:* you can name three concrete features and the files each one
+   Exit criterion: you can name three concrete features and the files each one
    lives in.
 
 2. **Copy their shape, not their code.** For each of the three, list: files
@@ -31,7 +31,7 @@ reader knows the house pattern, not yours.
    error codes used). Where the three agree, that is the house pattern — follow
    it even where you'd personally choose differently, because deviation costs
    every future reader a "why is this one different?" investigation.
-   *Exit criterion:* a written sketch of your feature's file list and layering
+   Exit criterion: a written sketch of your feature's file list and layering
    that mirrors the majority pattern.
 
 3. **Enumerate every registration point.** Features rarely live in one file. Diff
@@ -47,7 +47,7 @@ reader knows the house pattern, not yours.
    - permissions / authorization rules
    - user-facing docs, CHANGELOG, help text
    - test fixtures and factories
-   *Exit criterion:* a checklist where every item is either done or explicitly
+   Exit criterion: a checklist where every item is either done or explicitly
    marked not-applicable with a reason.
 
 4. **Wire in at existing seams.** Add your feature through the extension points
@@ -58,7 +58,7 @@ reader knows the house pattern, not yours.
    you'd have to modify five call sites, that is a signal to pause and check
    whether a smaller insertion point exists before restructuring (restructuring
    first is `safe-refactoring`, as its own commit).
-   *Exit criterion:* your diff adds code at existing extension points; it does
+   Exit criterion: your diff adds code at existing extension points; it does
    not add new frameworks-within-the-framework.
 
 5. **Write the smallest diff that FULLY does the job.** "Small" excludes nothing
@@ -66,14 +66,14 @@ reader knows the house pattern, not yours.
    job, not gold-plating. "Small" excludes the unrequested: drive-by renames,
    reformatting untouched code, refactoring neighbors, extra options "while
    you're in there". If you spot needed cleanup, note it for a separate change.
-   *Exit criterion:* every hunk in `git diff` traces to the request or to an
+   Exit criterion: every hunk in `git diff` traces to the request or to an
    item on your step-3 checklist.
 
 6. **Verify end to end.** Run the actual feature the way a user would — real CLI
    invocation, real HTTP request, real UI action — including at least one error
    path. Follow `verifying-changes` for the full standard; a feature is not done
    because it compiles and its unit tests pass.
-   *Exit criterion:* you have pasted real command output showing the feature
+   Exit criterion: you have pasted real command output showing the feature
    working and failing gracefully.
 
 ## Decision points
